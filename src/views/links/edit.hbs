@@ -1,0 +1,110 @@
+<div class='container p-4'>
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<div class="card">
+				<div class="card-body">
+					<form action="/links/edit/{{customers.id}}" method="post">
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" value="{{customers.fullname}}"placeholder="nombre" name="fullname" required autofocus>
+								<span class="input-group-addon">--</span>
+								<input type="text" class="form-control" value="{{customers.cedula}}" placeholder="cedula" name="cedula" required id="cedula">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" value="{{customers.telefono}}" placeholder="numero de contactno" name="telefono" required>
+								<span class="input-group-addon">--</span>
+								<input type="text" class="form-control" value="{{customers.cantidad}}" placeholder="cantidad" id="cantidad" name="cantidad" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" value="{{customers.semanas}}" name="semanas" id="semanas" required readonly>
+								<span class="input-group-addon">--</span>
+								<input type="date" class="form-control" value="{{customers.fecha}}" required name="fecha">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" class="form-control" value="{{customers.cantidadpagada}}" required id="cantidadpagada" placeholder="cantidad pagada" name="cantidadpagada" readonly>
+								<span class="input-group-addon">--</span>
+								<input type="text" class="form-control" required id="cantidadnopagada" placeholder="cantidad no pagada" value="{{customers.cantidadnopagada}}" name="cantidadnopagada" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" name="pagoporsemanas" value="{{customers.pagoprsemanas}}" id="pagoporsemanas" class="form-control" required placeholder="pago por semanas" readonly>
+								<span class="input-group-addon">--</span>
+								<input type="text" name="semanaspagadas" value="{{customers.semanaspagadas}}" id="semanaspagadas" class="form-control" required placeholder="semanas pagadas" >
+							</div>
+						</div>
+						<div class="form-group">
+							<div  class="input-group">
+								<input type="text" name="semanasnopagadas" value="{{customers.semanasnopagadas}}" id="semanasnopagadas" class="form-control" placeholder="semanas no pagadas" required readonly>
+								<span class="input-group-addon">--</span>
+								<input type="text" name="totalpagar" value="{{customers.totalpagar}}" class="form-control" id="totalpagar" required placeholder="total a pagar" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" name="abono" value="{{customers.abono}}" placeholder="abono" id="abono" class="form-control" required>
+								<span class="input-group-addon">--</span>
+								<input type="date" name="ultimopago" value="{{customers.ultimopago}}" class="form-control" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" name="semanasatrasadas" value="{{customers.semanasatrasadas}}" class="form-control" required placeholder="semanas atrasadas">
+								<span class="input-group-addon">--</span>
+								<input type="button" onclick="checkValue()" value="Aplicar Abono">
+							</div>
+						</div>
+						<div class="form-group">
+							<button  class="btn btn-success btn-block">Submit</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+setInterval(function(){
+var cantidad = parseFloat(document.getElementById("cantidad").value);
+console.log("cantidad " + cantidad);
+var resultado = cantidad * 0.10;
+document.getElementById("pagoporsemanas").value = resultado + " pago por semanas";
+total = resultado * 13;
+document.getElementById('totalpagar').value = total + " total a pagar";
+//total de semanas
+document.getElementById('semanas').value = 13 + " semanas";
+semanaspagadas = document.getElementById("semanaspagadas").value
+var s = 13 - semanaspagadas
+var semanasDecimal = s.toFixed(1)
+document.getElementById("semanasnopagadas").value = semanasDecimal + " semanas no pagadas";
+pagada = semanaspagadas * resultado;
+document.getElementById("cantidadpagada").value = pagada + " cantidad pagada";
+document.getElementById("cantidadnopagada").value = total - pagada + " cantidad no pagada";
+	
+},1000);
+
+function checkValue(){
+
+
+	var valor = parseFloat(document.getElementById("cantidad").value);
+	var abono = parseInt(document.getElementById('abono').value);
+    var x = (abono *10)/valor ;
+    console.log(x + "valor x")
+    s = parseInt(document.getElementById('semanaspagadas').value)
+    console.log(s + 'semanas pagadas')
+    y = s + x
+    console.log(y + " valor cierto")
+     parseInt(document.getElementById('semanaspagadas').value = y)
+}
+
+
+
+</script>
