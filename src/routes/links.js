@@ -33,8 +33,9 @@ router.post('/add', isLoggedIn, async (req, res) => {
 	res.redirect('/links');
 });
 
-router.get('/inversion', (req, res) => {
-	res.render('links/inversion');
+router.get('/inversion', async (req, res) => {
+	const inversion = await ('SELECT SUM(cantidad) FROM customers');
+	res.render('links/inversion', { inversion });
 
 });
 
