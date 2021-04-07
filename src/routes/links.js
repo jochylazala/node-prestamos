@@ -34,7 +34,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
 });
 
 router.get('/inversion', (req, res) => {
-	res.render('/links/inversion');
+	res.render('links/inversion');
 
 });
 
