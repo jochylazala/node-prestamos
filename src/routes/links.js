@@ -34,7 +34,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
 });
 
 router.get('/inversion', async (req, res) => {
-	const inversion = await ('SELECT SUM(cantidad) FROM customers');
+	const inversion = await pool.query ('SELECT SUM(cantidad) FROM customers WHERE user_id = ?', [req.user.id]);
 	res.render('links/inversion', { inversion });
 
 });
