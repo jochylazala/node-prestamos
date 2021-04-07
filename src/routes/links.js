@@ -33,6 +33,11 @@ router.post('/add', isLoggedIn, async (req, res) => {
 	res.redirect('/links');
 });
 
+router.get('/inversion', (req, res) => {
+	res.render('/links/inversion');
+
+});
+
 router.get('/', isLoggedIn, async (req, res) => {
 	const clientes = await pool.query('SELECT * FROM customers WHERE user_id = ?', [req.user.id]);
 	res.render('links/list', { clientes });
@@ -80,5 +85,9 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	res.redirect('/links');
 
 });
+
+
+
+
 
 module.exports = router;
