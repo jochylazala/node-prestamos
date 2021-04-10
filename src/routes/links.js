@@ -34,12 +34,9 @@ router.post('/add', isLoggedIn, async (req, res) => {
 });
 
 router.get('/inversion', async (req, res) => {
-	const inversion = await pool.query('SELECT SUM(cantidad) FROM customers WHERE user_id = ?', [req.user.id]);
-	for(i = 0; i <= inversion; i++){
-		return res.render('links/inversion', { i });
-	};
-	
-
+	const inversion = await pool.query('SELECT SUM(cantidad) AS cantidad, SUM(totalpagar) AS total, COUNT(fullname) AS clientes, SUM(cantidadpagada) AS cantidadpagada, SUM(totalpagar) - SUM(cantidad) AS interes, SUM(totalpagar) - SUM(cantidadpagada) AS pendiente FROM customers WHERE user_id = ?', [req.user.id]);
+	console.log(inversion)
+	res.render('links/inversion', { inversion });
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
