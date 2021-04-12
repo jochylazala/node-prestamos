@@ -1,27 +1,46 @@
-<div class="container p-4">
-	<div class="row">
-		{{# each inversion}}
-			<div class="col-md-3">
-				<div class="card text-center">
-					<div class="card-body">
-						<p class="m-2">Total Invertido: {{cantidad}}</>
-						<p class="m-2">Total a Recolectar: {{total}}</p>
-						<p class="m-2">Clientes: {{clientes}}</p>
-						<p clas="m-2">Total Pagado: {{cantidadpagada}}</p>
-						<p class="m-2">Intereses: {{interes}}</p>
-						<p class="m-2">Total Pendiente: {{pendiente}}</p>
-						
-					</div>
-				</div>
-			</div>
-			{{else}}
-				<div class="col-md-4 mx-auto">
-					<div class="card card-body text-center">
-						<p>There are not customers added yet!</p>
-						<a href="/links/add">Add one!</a>
-					</div>
-				</div>
+<div class="container">
+	{{# each inversion}}
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th scope="col">Total Invertido</th>
+					<th scope="col">Total a Recolectar</th>
+					<th scope="col">Clientes</th>
+					<th scope="col">Cantidad Pagada</th>
+					<th scope="col">Intereses</th>
+					<th scope="col">Cantidad No Pagada</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{cantidad}}</td>
+					<td>{{total}}</td>
+					<td>{{clientes}}</td>
+					<td>{{cantidadpagada}}</td>
+					<td>{{interes}}</td>
+					<td>{{pendiente}}</td>
+				</tr>
+			</tbody>
 
-		{{/each}}
-	</div>
+		</thable>
+
+	{{/each}}
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -39,8 +39,10 @@ router.get('/inversion', async (req, res) => {
 	res.render('links/inversion', { inversion });
 });
 
+
+
 router.get('/', isLoggedIn, async (req, res) => {
-	const clientes = await pool.query('SELECT * FROM customers WHERE user_id = ?', [req.user.id]);
+	const clientes = await pool.query('SELECT id as id, fullname as fullname, cantidad as cantidad, totalpagar as totalpagar, cantidadpagada as cantidadpagada, DATE_FORMAT(ultimopago, "%d.%m.%Y") as ultimopago, DATE_FORMAT(fecha, "%d.%m.%Y") as fecha FROM customers WHERE user_id = ?', [req.user.id]);
 	res.render('links/list', { clientes });
 });
 
@@ -54,7 +56,7 @@ router.get('/delete/:id',  isLoggedIn, async(req, res) => {
 
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
-	const customers = await pool.query('SELECT * FROM customers WHERE id = ?', [id]);
+	const customers = await pool.query('SELECT id as id, fullname as fullname, cedula as cedula, telefono as telefono, cantidad as cantidad, semanas as semanas, DATE_FORMAT(fecha, "%d.%m.%Y") as fecha, cantidadpagada as cantidadpagada, cantidadnopagada as cantidadnopagada, pagoporsemanas as pagoporsemanas, semanaspagadas as semanaspagadas,semanasnopagadas as semanasnopagadas,totalpagar as totalpagar,abono as abono, DATE_FORMAT(ultimopago, "%d.%m.%Y") as ultimopago, semanasatrasadas as semanasatrasadas FROM customers WHERE id = ?', [id]);
 	console.log(customers[0]);
 	res.render('links/edit',{customers:customers[0]});
 });
