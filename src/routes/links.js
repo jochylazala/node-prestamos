@@ -42,7 +42,7 @@ router.get('/inversion', async (req, res) => {
 
 
 router.get('/', isLoggedIn, async (req, res) => {
-	const clientes = await pool.query('SELECT id as id, fullname as fullname, cantidad as cantidad, totalpagar as totalpagar, cantidadpagada as cantidadpagada, DATE_FORMAT(ultimopago, "%d.%m.%Y") as ultimopago, DATE_FORMAT(fecha, "%d.%m.%Y") as fecha FROM customers WHERE user_id = ?', [req.user.id]);
+	const clientes = await pool.query('SELECT *  FROM customers WHERE user_id = ?', [req.user.id]);
 	res.render('links/list', { clientes });
 });
 
