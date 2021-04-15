@@ -64,14 +64,13 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
-	const { fullname, cedula, telefono, cantidad, semanas, fecha, cantidadpagada, cantidadnopagada, pagoporsemanas, semanaspagadas, semanasnopagadas, totalpagar, abono, ultimopago, semanasatrasadas } = req.body;
+	const { fullname, cedula, telefono, cantidad, semanas, cantidadpagada, cantidadnopagada, pagoporsemanas, semanaspagadas, semanasnopagadas, totalpagar, abono, semanasatrasadas, fecha, ultimopago } = req.body;
 	const newCliente = {
 		fullname,
 		cedula,
 		telefono,
 		cantidad,
 		semanas,
-		fecha,
 		cantidadpagada,
 		cantidadnopagada,
 		pagoporsemanas,
@@ -79,8 +78,9 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 		semanasnopagadas,
 		totalpagar,
 		abono,
-		ultimopago,
-		semanasatrasadas
+		semanasatrasadas,
+		fecha,
+		ultimopago
 	};
 	console.log(newCliente);
 	await pool.query('UPDATE customers set ? WHERE id = ?', [newCliente, id]);
