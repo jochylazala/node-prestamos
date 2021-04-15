@@ -1,8 +1,12 @@
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 <div class="container p-5">
-	<input type="text" class="form-control my-2 col-md-3 light-table-filter" data-table="order-table" placeholder="Buscar cliente" id="buscar" onkeyup="">
+	<form method="get" action="links/list">
+		<input type="text" class="form-control my-2 col-md-3 light-table-filter" data-table="order-table" placeholder="Buscar cliente" name="search" id="search">
+	</form>
 
 	{{# each clientes}}
-		<table id="resultado" class="table table-responsive">
+		<table id="customer-table" class="table table-responsive">
 			<thead>
 				<tr>
 					<th scope="col">ID</th>
@@ -37,3 +41,29 @@
 
 </div>
 
+<script>
+	 $(document).ready(function(){  
+           $('#search').keyup(function(){  
+                search_table($(this).val());  
+           });  
+           function search_table(value){  
+                $('#customer-table tr').each(function(){  
+                     var found = 'false';  
+                     $(this).each(function(){  
+                          if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
+                          {  
+                               found = 'true';  
+                          }  
+                     });  
+                     if(found == 'true')  
+                     {  
+                          $(this).show();  
+                     }  
+                     else  
+                     {  
+                          $(this).hide();  
+                     }  
+                });  
+           }  
+      });  
+</script>
