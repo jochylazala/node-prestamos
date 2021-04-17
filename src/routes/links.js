@@ -36,7 +36,14 @@ router.post('/add', isLoggedIn, async (req, res) => {
 router.get('/inversion', async (req, res) => {
 	const inversion = await pool.query('SELECT SUM(cantidad) AS cantidad, SUM(totalpagar) AS total, COUNT(fullname) AS clientes, SUM(cantidadpagada) AS cantidadpagada, SUM(totalpagar) - SUM(cantidad) AS interes, SUM(totalpagar) - SUM(cantidadpagada) AS pendiente FROM customers WHERE user_id = ?', [req.user.id]);
 	console.log(inversion)
+
 	res.render('links/inversion', { inversion });
+});
+
+router.get('/semanas', async (req, res) => {
+	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
+	res.render('links/semanas', { update });
+	
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
@@ -51,28 +58,25 @@ router.get('/delete/:id',  isLoggedIn, async(req, res) => {
 	res.redirect('/links');
 });
 
-router.get('/semanas', async (req, res) => {
-	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
-	res.render('links/semanas', { update });
-	
-});
 
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
-	const customers = await pool.query('SELECT * FROM customers WHERE id = ?', [id]);
+	const customers = await pool.query('SELECT id as id, fullname as fullname, cedula as cedula, telefono as telefono, cantidad as cantidad, semanas as semanas, DATE_FORMAT(fecha, "%d.%m.%Y") as fecha, cantidadpagada as cantidadpagada, cantidadnopagada as cantidadnopagada, pagoporsemanas as pagoporsemanas, semanaspagadas as semanaspagadas,semanasnopagadas as semanasnopagadas,totalpagar as totalpagar,abono as abono, DATE_FORMAT(ultimopago, "%d.%m.%Y") as ultimopago, semanasatrasadas as semanasatrasadas FROM customers WHERE id = ?', [id]);
 	console.log(customers[0]);
 	res.render('links/edit',{customers:customers[0]});
 });
 
+
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
-	const { fullname, cedula, telefono, cantidad, semanas, cantidadpagada, cantidadnopagada, pagoporsemanas, semanaspagadas, semanasnopagadas, totalpagar, abono, semanasatrasadas, fecha, ultimopago } = req.body;
+	const { fullname, cedula, telefono, cantidad, semanas, fecha, cantidadpagada, cantidadnopagada, pagoporsemanas, semanaspagadas, semanasnopagadas, totalpagar, abono, ultimopago, semanasatrasadas } = req.body;
 	const newCliente = {
 		fullname,
 		cedula,
 		telefono,
 		cantidad,
 		semanas,
+		fecha,
 		cantidadpagada,
 		cantidadnopagada,
 		pagoporsemanas,
@@ -80,9 +84,8 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 		semanasnopagadas,
 		totalpagar,
 		abono,
-		semanasatrasadas,
-		fecha,
-		ultimopago
+		ultimopago,
+		semanasatrasadas
 	};
 	console.log(newCliente);
 	await pool.query('UPDATE customers set ? WHERE id = ?', [newCliente, id]);
