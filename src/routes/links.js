@@ -39,8 +39,6 @@ router.get('/inversion', async (req, res) => {
 	res.render('links/inversion', { inversion });
 });
 
-
-
 router.get('/', isLoggedIn, async (req, res) => {
 	const clientes = await pool.query('SELECT *  FROM customers WHERE user_id = ?', [req.user.id]);
 	res.render('links/list', { clientes });
@@ -53,6 +51,11 @@ router.get('/delete/:id',  isLoggedIn, async(req, res) => {
 	res.redirect('/links');
 });
 
+router.get('/semanas', async (req, res) => {
+	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
+	res.render('links/semanas', { update });
+	
+});
 
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
@@ -60,7 +63,6 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
 	console.log(customers[0]);
 	res.render('links/edit',{customers:customers[0]});
 });
-
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
