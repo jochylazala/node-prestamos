@@ -41,8 +41,8 @@ router.get('/inversion', async (req, res) => {
 });
 
 router.get('/semanas', async (req, res) => {
-//	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
-	res.render('links/semanas');
+	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
+	res.render('links/semanas', { update });
 	
 });
 

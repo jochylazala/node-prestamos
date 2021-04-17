@@ -1,0 +1,46 @@
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<div class="container p-2">
+	
+
+	{{# each update}}
+
+		
+<table id="customer-table" class="table table-responsive">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Cantidad</th>
+					<th>Total a Pagar</th>
+					<th>Cantidad Pagada</th>
+					<th>Ultimo Pago</th>
+					<th>Fecha de Inicio</th>
+					<th>Semanas Atrasadas</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{id}}</td>
+					<td>{{fullname}}</td>
+					<td>{{cantidad}}</td>
+					<td>{{totalpagar}}</t>
+					<td>{{cantidadpagada}}</td>
+					<td>{{ultimopago}}</td>
+					<td>{{fecha}}</td>
+					<td>{{semanasatrasadas}}</td>
+					<td>
+						<a href="/links/delete/{{id}}" class="btn btn-danger">Eliminar</a>
+						<a href="/links/edit/{{id}}" class="btn btn-primary" >Editar</a>
+
+					</td>
+				</tr>
+			</tbody>
+		 
+		</table>
+
+	{{/each}}
+
+</div>
