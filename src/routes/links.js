@@ -40,11 +40,11 @@ router.get('/inversion', async (req, res) => {
 	res.render('links/inversion', { inversion });
 });
 
-router.get('/semanas', async (req, res) => {
-	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
-	res.render('links/semanas', { update });
+//router.get('/semanas', async (req, res) => {
+//	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
+//	res.render('links/semanas', { update });
 	
-});
+//});
 
 router.get('/', isLoggedIn, async (req, res) => {
 	const clientes = await pool.query('SELECT *  FROM customers WHERE user_id = ?', [req.user.id]);
@@ -58,14 +58,12 @@ router.get('/delete/:id',  isLoggedIn, async(req, res) => {
 	res.redirect('/links');
 });
 
-
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
 	const customers = await pool.query('SELECT id as id, fullname as fullname, cedula as cedula, telefono as telefono, cantidad as cantidad, semanas as semanas, DATE_FORMAT(fecha, "%d.%m.%Y") as fecha, cantidadpagada as cantidadpagada, cantidadnopagada as cantidadnopagada, pagoporsemanas as pagoporsemanas, semanaspagadas as semanaspagadas,semanasnopagadas as semanasnopagadas,totalpagar as totalpagar,abono as abono, DATE_FORMAT(ultimopago, "%d.%m.%Y") as ultimopago, semanasatrasadas as semanasatrasadas FROM customers WHERE id = ?', [id]);
 	console.log(customers[0]);
 	res.render('links/edit',{customers:customers[0]});
 });
-
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	const { id } = req.params;
@@ -93,9 +91,5 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 	res.redirect('/links');
 
 });
-
-
-
-
 
 module.exports = router;
