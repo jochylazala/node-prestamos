@@ -40,11 +40,11 @@ router.get('/inversion', async (req, res) => {
 	res.render('links/inversion', { inversion });
 });
 
-//router.get('/semanas', async (req, res) => {
+router.get('/semanas', async (req, res) => {
 //	const update = await pool.query('select * from customers where ultimopago >(current_timestamp() - interval 7 day)');
-//	res.render('links/semanas', { update });
+	res.render('links/semanas');
 	
-//});
+});
 
 router.get('/', isLoggedIn, async (req, res) => {
 	const clientes = await pool.query('SELECT *  FROM customers WHERE user_id = ?', [req.user.id]);
